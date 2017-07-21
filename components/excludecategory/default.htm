@@ -1,0 +1,59 @@
+{% put sideBarLeft %}
+<section class="space--sm unpad--bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+            	<div class="row">
+            	<h2>ALTRE PUNTATE</h2>
+				<hr>
+				<div class="masonry masonry--gapless masonry-blog-magazine">
+                        <div class="masonry__container">
+{% for post in posts %}
+                        
+    {% set embed = post.extend.embed %}
+	
+	{# Altri articoli in evidenza #}
+	<div class="masonry__item col-sm-6 col-xs-12">
+        <a class="block" href="{{ post.url }}" >
+            <article class="imagebg " data-scrim-bottom="8">
+                {% if post.cover_image %}
+                <div class="background-image-holder">
+                    <img alt="background" src="{{ post.cover_image.thumb(800, 450, { mode: 'crop', quality: '80', extension: 'jpg' }) }}" />
+                </div>
+                {% endif %}
+                <a href="{{ post.url }}?autoplay=true" class="video-play-icon playfix"></a>
+                <div class="article__title">
+                    <span>{{ post.published_at|localizeddate('none', 'none', 'it_IT', null, "d MMMM Y")|ucfirst }}</span>
+                    <h4>{{ post.title }}</h4>
+                </div>
+            </article>
+        </a>
+    </div>
+    
+{% endfor %}
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="space--xxs">
+    <div class="bg--primary unpad cta cta-3 text-center">
+    	<a href="#">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>Guarda tutte le puntate 
+                        <span class="pull-right"><i class="icon-Right-4"></i></span></h2>
+                    </div>
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </a>
+    </div>
+</section>
+{% endput %}

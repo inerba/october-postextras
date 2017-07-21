@@ -1,0 +1,11 @@
+<?php 
+	$data = $this->vars['formModel']; 
+	$html = isset($data->attrib['media']['html']) ? $data->attrib['media']['html'] : false;
+	dump($data->attrib['media']);
+	if($html):
+
+?>
+<div class="text-center">
+	<?= $html ?>
+</div>
+<?php endif; ?>

@@ -1,0 +1,9 @@
+1.0.1:
+    - 'First version of PostExtras'
+    - create_blog_posts_table.php
+1.0.2:
+    - 'Post in evidenza'
+    - migration102.php
+1.0.3:
+    - 'Autore del post'
+    - create_blog_posts_author.php

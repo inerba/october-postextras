@@ -1,0 +1,5 @@
+{
+    "require": {
+        "essence/essence": "^3.3"
+    }
+}

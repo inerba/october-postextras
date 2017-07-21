@@ -1,0 +1,25 @@
+<section class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="switchable__text">
+
+                    <h4>IN EVIDENZA</h4>
+                    <h2><a href="{{ featured_post.url }}">{{ featured_post.title }}</a></h2>
+                    <p class="lead">{{ featured_post.excerpt }}</p>
+                </div>
+            </div>
+            <div class="col-md-7 col-sm-5 col-xs-12 col-md-offset-1 col-sm-offset-1">
+                <div class="video-cover border--round box-shadow-wide">
+
+                    <a href="{{ featured_post.url }}?autoplay=true" class="video-play-icon"></a>
+                    <img alt="image" src="{{ featured_post.cover_image.thumb(800, 450, { mode: 'crop', quality: '80', extension: 'jpg' }) }}" />
+                    
+                </div>
+                <!--end video cover-->
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
