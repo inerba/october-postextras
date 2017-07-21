@@ -94,6 +94,13 @@ class Plugin extends PluginBase
 
         });
 
+        UserModel::extend(function($model)
+        {
+            $model->addFillable([
+                'bio',
+            ]);
+        });
+
         UsersController::extendFormFields(function($form, $model, $context)
         {
             if (!$model instanceof UserModel) {
