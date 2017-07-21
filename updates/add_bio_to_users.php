@@ -4,7 +4,7 @@ use Schema;
 use October\Rain\Database\Updates\Migration;
 use System\Classes\PluginManager;
 
-class Migration104 extends Migration
+class AddBioToUsers extends Migration
 {
     public function up()
     {
@@ -12,7 +12,7 @@ class Migration104 extends Migration
         {
             Schema::table('users', function($table)
             {
-                $table->text('bio')->nullable();
+                $table->text('pe_bio')->nullable();
             });
         }
     }
@@ -23,7 +23,7 @@ class Migration104 extends Migration
         {
             Schema::table('users', function($table)
             {
-                $table->dropColumn('bio');
+                $table->dropColumn('pe_bio');
             });
         }
     }

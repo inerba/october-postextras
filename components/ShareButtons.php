@@ -7,21 +7,14 @@ class ShareButtons extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'ShareButtons Component',
-            'description' => 'No description provided yet...'
+            'name'        => 'Share Buttons',
+            'description' => 'Pulsanti di condivisione'
         ];
     }
 
     public function defineProperties()
     {
-        return [
-            'text' => [
-                'description' => 'xxxxxxxxxxx',
-                'title'       => 'xxxxxxxxxx',
-                'default'     => 'ciao',
-                'type'        => 'string'
-            ]
-        ];
+        return [];
     }
 
     public function onRun()

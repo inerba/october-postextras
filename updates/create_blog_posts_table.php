@@ -11,6 +11,8 @@ class CreateBlogPostsTable extends Migration
             Schema::table('rainlab_blog_posts', function($table)
             {
                 $table->text('extend')->nullable();
+                $table->boolean('is_featured')->default(true);
+                $table->integer('author_id')->unsigned()->nullable();
             });
         }
     }
@@ -21,6 +23,8 @@ class CreateBlogPostsTable extends Migration
             Schema::table('rainlab_blog_posts', function($table)
             {
                 $table->dropColumn('extend');
+                $table->dropColumn('is_featured');
+                $table->dropColumn('author_id');
             });
         }
     }

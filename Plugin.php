@@ -25,7 +25,7 @@ class Plugin extends PluginBase
     {
         return [
             'name'        => 'PostExtras',
-            'description' => 'No description provided yet...',
+            'description' => 'Post & Cms extra fields',
             'author'      => 'Inerba',
             'icon'        => 'icon-leaf'
         ];
@@ -58,13 +58,7 @@ class Plugin extends PluginBase
                 'og_image' => 'System\Models\File'
             ];
 
-           //$model->hasOne = [ 'author' => ['RainLab\User\Models\User','key'=>'id', 'otherkey'=>'author']];
-           $model->belongsTo = [ 'author' => 'RainLab\User\Models\User' ];
-
-            /*$model->addDynamicMethod('listStatuses', function() {
-                return \RainLab\User\Models\User::all()->lists('surname', 'id');
-            });*/
-
+            $model->belongsTo = [ 'author' => 'RainLab\User\Models\User' ];
 
             $model->bindEvent('model.afterSave', function() use ($model) {
 
@@ -97,7 +91,7 @@ class Plugin extends PluginBase
         UserModel::extend(function($model)
         {
             $model->addFillable([
-                'bio',
+                'pe_bio',
             ]);
         });
 
@@ -107,7 +101,7 @@ class Plugin extends PluginBase
                 return;
             }
             $form->addTabFields([
-                'bio' => [
+                'pe_bio' => [
                     'label' => 'Bio',
                     'tab'   => 'Bio',
                     'type'  => 'textarea',
@@ -255,8 +249,6 @@ class Plugin extends PluginBase
             );
         });
 
-
-
     }
 
     /**
@@ -272,43 +264,6 @@ class Plugin extends PluginBase
              'Inerba\PostExtras\Components\FeaturedPosts' => 'featuredPosts',
              'Inerba\PostExtras\Components\PostModule' => 'PostModule',
              'Inerba\PostExtras\Components\ExcludeCategory' => 'ExcludeCategory'
-        ];
-    }
-
-    /**
-     * Registers any back-end permissions used by this plugin.
-     *
-     * @return array
-     */
-    public function registerPermissions()
-    {
-        return []; // Remove this line to activate
-
-        return [
-            'inerba.postextras.some_permission' => [
-                'tab' => 'PostExtras',
-                'label' => 'Some permission'
-            ],
-        ];
-    }
-
-    /**
-     * Registers back-end navigation items for this plugin.
-     *
-     * @return array
-     */
-    public function registerNavigation()
-    {
-        return []; // Remove this line to activate
-
-        return [
-            'postextras' => [
-                'label'       => 'PostExtras',
-                'url'         => Backend::url('inerba/postextras/mycontroller'),
-                'icon'        => 'icon-leaf',
-                'permissions' => ['inerba.postextras.*'],
-                'order'       => 500,
-            ],
         ];
     }
 

@@ -11,7 +11,7 @@ class PostModule extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'PostModule Component',
+            'name'        => 'Ultimo post in evidenza',
             'description' => "Prende l'ultimo post in evidenza da una categoria scelta"
         ];
     }

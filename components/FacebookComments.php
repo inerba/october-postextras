@@ -7,8 +7,8 @@ class FacebookComments extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'FacebookComments Component',
-            'description' => 'No description provided yet...'
+            'name'        => 'Facebook Comments',
+            'description' => 'Mostra i commenti di facebook'
         ];
     }
 

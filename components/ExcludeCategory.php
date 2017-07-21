@@ -11,8 +11,8 @@ class ExcludeCategory extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'ExcludeCategory Component',
-            'description' => "Prende l'ultimo post in evidenza da una categoria scelta"
+            'name'        => 'Lista categorie escluse',
+            'description' => "Lista di post categorie escluse"
         ];
     }
 
