@@ -8,6 +8,8 @@ use Cms\Classes\Theme;
 use System\Classes\PluginManager;
 use RainLab\Blog\Models\Post as PostModel;
 use RainLab\Blog\Models\Category as PostCategory;
+use RainLab\User\Controllers\Users as UsersController;
+use RainLab\User\Models\User as UserModel;
 
 /**
  * PostExtras Plugin Information File
@@ -29,7 +31,7 @@ class Plugin extends PluginBase
         ];
     }
 
-    public $require = ['RainLab.Blog','RainLab.User'];
+    public $require = ['RainLab.Blog','RainLab.Pages','RainLab.User'];
 
     /**
      * Register method, called when the plugin is first registered.
@@ -90,6 +92,22 @@ class Plugin extends PluginBase
                 'cover_image' => 'System\Models\File',
             ];
 
+        });
+
+        UsersController::extendFormFields(function($form, $model, $context)
+        {
+            if (!$model instanceof UserModel) {
+                return;
+            }
+            $form->addTabFields([
+                'bio' => [
+                    'label' => 'Bio',
+                    'tab'   => 'Bio',
+                    'type'  => 'textarea',
+                    'size'  => 'small',
+                    'span'  => 'full'
+                ],
+            ]);
         });
 
         /*
