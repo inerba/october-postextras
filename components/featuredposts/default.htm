@@ -1,3 +1,29 @@
-<p>This is the default markup for component featuredPosts</p>
+<div id="posts" class="small-thumbs alt">
+{% for post in posts %}
+	<div class="entry clearfix">
+		<div class="entry-c">
+			<div class="entry-title">
+				<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+			</div>
+			<ul class="entry-meta clearfix">
+				<li><i class="icon-calendar3"></i> {{ post.published_at|localizeddate('none', 'none', 'it_IT', null, "d MMMM Y")|ucfirst }}</li>
+				{% if post.author %}
+					<li><i class="icon-user"></i> {{ post.author.name }} {{ post.author.surname }}</li>
+				{% endif %}
 
-<small>You can delete this file if you want</small>
+				{% if post.categories.count %}
+					<li>
+						<i class="icon-folder-open"></i> 
+						{% for category in post.categories %}
+							<a href="{{ url('category') }}/{{ category.slug }}">{{ category.name }}</a>{% if not loop.last %}, {% endif %}
+						{% endfor %}
+					</li>
+				{% endif %}
+			</ul>
+			<div class="entry-content">
+				<p>{{ post.excerpt }} <a href="{{ post.url }}"class="more-link">continua &rarr;</a></p>
+			</div>
+		</div>
+	</div>
+{% endfor %}
+</div>
