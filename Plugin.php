@@ -59,7 +59,13 @@ class Plugin extends PluginBase
                 'og_image' => 'System\Models\File'
             ];
 
-            $model->belongsTo = [ 'author' => 'RainLab\User\Models\User' ];
+            $model->belongsTo['author'] = [ 'RainLab\User\Models\User' ];
+
+            // Imposta il post come "pubblicato" di default con la data e ora del momento in cui si apre
+            $model->attributes = [
+                'published' => true,
+                'published_at' => \Carbon\Carbon::now()
+            ];
 
             $model->bindEvent('model.afterSave', function() use ($model) {
 
@@ -125,7 +131,19 @@ class Plugin extends PluginBase
                         'type'    => 'relation',
                         'select'  => 'concat(name, " ", surname)',
                         'emptyOption' => 'Nessun autore',
+                        'span'    => 'left',
                         'tab'     => 'rainlab.blog::lang.post.tab_manage'
+                    ],
+                    'extend[custom_author]' => [
+                        'label'   => 'Autore personalizzato',
+                        'type'    => 'text',
+                        'tab'     => 'rainlab.blog::lang.post.tab_manage',
+                        'span'    => 'right',
+                        'trigger' => [
+                            'action' => 'show',
+                            'field' => 'author',
+                            'condition' => 'value[]'
+                        ]
                     ],
                     'extend[embed]' => [
                         'label'   => 'Media embedder',
