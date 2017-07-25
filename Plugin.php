@@ -6,6 +6,7 @@ use Event;
 use Cms\Classes\Page;
 use Cms\Classes\Theme;
 use System\Classes\PluginManager;
+use Inerba\Embedd\Classes\Embedd;
 use RainLab\Blog\Models\Post as PostModel;
 use RainLab\Blog\Models\Category as PostCategory;
 use RainLab\User\Controllers\Users as UsersController;
@@ -63,9 +64,9 @@ class Plugin extends PluginBase
             $model->bindEvent('model.afterSave', function() use ($model) {
 
                 $input = input('Post');
-
-                if($input['extend']['embed_cover'] == 0 && isset($model->extend['embed']['thumbnailUrl'])){
-                    $remote_file = strtok($model->extend['embed']['thumbnailUrl'],'?');
+                // Copia l'immagine dell'elemento incorporato per farne una copertina manipolabile
+                if($input['extend']['embed_cover'] == 0 && isset($model->extend['embed']['image'])){
+                    $remote_file = strtok($model->extend['embed']['image'],'?');
                     $temp_file = storage_path('temp/') . uniqid(rand(), true) . '.' . pathinfo($remote_file, PATHINFO_EXTENSION);
                     $file = copy($remote_file, $temp_file);
 
@@ -136,7 +137,7 @@ class Plugin extends PluginBase
                     ],
                     'extend[embed]' => [
                         'label'   => 'Media embedder',
-                        'type'    => 'extractmedia',
+                        'type'    => 'embedd',
                         'tab'     => 'rainlab.blog::lang.post.tab_manage'
                     ],
                     'extend[embed_cover]' => [
@@ -215,11 +216,11 @@ class Plugin extends PluginBase
             }
 
             if (!$widget->model instanceof \Cms\Classes\Page) return;
-            
+
             if (!($theme = Theme::getEditTheme())) {
                 throw new ApplicationException(Lang::get('cms::lang.theme.edit.not_found'));
             }
-            
+
             $widget->addFields(
                 [
                     'settings[meta_robots]' => [
@@ -267,16 +268,4 @@ class Plugin extends PluginBase
         ];
     }
 
-    /**
-     * Registers any form widgets implemented in this plugin.
-     */
-    public function registerFormWidgets()
-    {
-        return [
-            'Inerba\PostExtras\FormWidgets\ExtractMedia' => [
-                'label' => 'Extract Media',
-                'code' => 'extractmedia'
-            ],
-        ];
-    }
 }
