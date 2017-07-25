@@ -119,15 +119,7 @@ class Plugin extends PluginBase
             if( PluginManager::instance()->hasPlugin('RainLab.Blog') && $widget->model instanceof \RainLab\Blog\Models\Post)
             {
 
-               // $widget->model->jsonable(['media']);
-
                 $widget->addFields([
-                    /*'extend[author]' => [
-                        'label'   => 'Autore',
-                        'type' => 'dropdown',
-                        'options' => 'listStatuses',
-                        'tab'     => 'rainlab.blog::lang.post.tab_manage'
-                    ],*/
                     'author' => [
                         'label'   => 'Autore',
                         'type'    => 'relation',
