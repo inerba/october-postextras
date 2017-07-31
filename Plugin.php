@@ -54,10 +54,7 @@ class Plugin extends PluginBase
         PostModel::extend(function($model){
             $model->jsonable(["extend"]);
 
-            $model->attachOne = [
-                'cover_image' => 'System\Models\File',
-                'og_image' => 'System\Models\File'
-            ];
+            $model->attachOne = array_merge( $model->attachOne, ['cover_image' => 'System\Models\File'] );
 
             $model->belongsTo['author'] = [ 'RainLab\User\Models\User' ];
 
@@ -89,9 +86,7 @@ class Plugin extends PluginBase
 
         PostCategory::extend(function($model){
 
-            $model->attachOne = [
-                'cover_image' => 'System\Models\File',
-            ];
+            $model->attachOne = array_merge( $model->attachOne, ['cover_image' => 'System\Models\File'] );
 
         });
 
@@ -126,6 +121,12 @@ class Plugin extends PluginBase
             {
 
                 $widget->addFields([
+                    'extend[direct_link]' => [
+                        'label'   => 'Link diretto, invia direttamente al link inserito',
+                        'type'    => 'text',
+                        'tab'     => 'rainlab.blog::lang.post.tab_manage',
+                        'span'    => 'full',
+                    ],
                     'author' => [
                         'label'   => 'Autore',
                         'type'    => 'relation',
@@ -166,41 +167,6 @@ class Plugin extends PluginBase
                             'condition' => 'checked'
                         ]
                     ],
-                    // SEO
-                    'extend[seo][meta_title]' => [
-                        'label'   => 'Title',
-                        'type'    => 'text',
-                        'tab'     => 'SEO e Social',
-                    ],
-                    'extend[seo][meta_description]' => [
-                        'label'   => 'Description',
-                        'type'    => 'textarea',
-                        'size'    => 'tiny',
-                        'tab'     => 'SEO e Social',
-                    ],
-                    'extend[seo][meta_robots]' => [
-                        'label'   => 'Robots, direttive per i motori di ricerca',
-                        'type'    => 'dropdown',
-                        'options' => [
-                            'index,follow' => 'Indicizza e segui i link diretti (index,follow)',
-                            'noindex,follow' => 'Non indicizzare ma segui i link diretti (noindex,follow)',
-                            'index,nofollow' => 'Indicizza ma non seguire i link diretti (index,nofollow)',
-                            'noindex,nofollow' => 'Non indicizzare e non seguire i link diretti (noindex,nofollow)'
-                        ],
-                        'tab'     => 'SEO e Social',
-                    ],
-                    'og_image' => [
-                        'label'   => 'Immagine per i social network',
-                        'type'    => 'fileupload',
-                        'mode'    => 'image',
-                        'tab'     => 'SEO e Social',
-                    ],
-                    'extend[seo][twitter_creator]' => [
-                        'label'   => 'Username twitter dell\'autore',
-                        'type'    => 'text',
-                        'tab'     => 'SEO e Social',
-                    ],
-
                     'is_featured' => [
                         'label'   => 'Post in evidenza',
                         'type'    => 'switch',
@@ -231,33 +197,6 @@ class Plugin extends PluginBase
                 throw new ApplicationException(Lang::get('cms::lang.theme.edit.not_found'));
             }
 
-            $widget->addFields(
-                [
-                    'settings[meta_robots]' => [
-                        'label'   => 'Robots, direttive per i motori di ricerca',
-                        'type'    => 'dropdown',
-                        'options' => [
-                            'index,follow' => 'Indicizza e segui i link diretti (index,follow)',
-                            'noindex,follow' => 'Non indicizzare ma segui i link diretti (noindex,follow)',
-                            'index,nofollow' => 'Indicizza ma non seguire i link diretti (index,nofollow)',
-                            'noindex,nofollow' => 'Non indicizzare e non seguire i link diretti (noindex,nofollow)'
-                        ],
-                        'tab'     => 'cms::lang.editor.meta',
-                    ],
-                    'settings[og_image_default]' => [
-                        'label'   => 'Immagine per i social network',
-                        'type'    => 'mediafinder',
-                        'mode'    => 'image',
-                        'tab'     => 'cms::lang.editor.meta',
-                    ],
-                    'settings[twitter_creator]' => [
-                        'label'   => 'Username twitter dell\'autore',
-                        'type'    => 'text',
-                        'tab'     => 'cms::lang.editor.meta',
-                    ],
-                ],
-                'primary'
-            );
         });
 
     }
