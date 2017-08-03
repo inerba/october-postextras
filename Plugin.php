@@ -52,10 +52,8 @@ class Plugin extends PluginBase
     public function boot()
     {
         PostModel::extend(function($model){
-            $model->jsonable(["extend"]);
-
+            $model->jsonable(array_merge($model->getJsonable(), ["extend"]));
             $model->attachOne = array_merge( $model->attachOne, ['cover_image' => 'System\Models\File'] );
-
             $model->belongsTo['author'] = [ 'RainLab\User\Models\User' ];
 
             // Imposta il post come "pubblicato" di default con la data e ora del momento in cui si apre
@@ -85,9 +83,7 @@ class Plugin extends PluginBase
         });
 
         PostCategory::extend(function($model){
-
             $model->attachOne = array_merge( $model->attachOne, ['cover_image' => 'System\Models\File'] );
-
         });
 
         UserModel::extend(function($model)
@@ -179,9 +175,6 @@ class Plugin extends PluginBase
 
             if( PluginManager::instance()->hasPlugin('RainLab.Blog') && $widget->model instanceof \RainLab\Blog\Models\Category)
             {
-
-               // $widget->model->jsonable(['media']);
-
                 $widget->addFields([
                     'cover_image' => [
                         'label'   => 'Immagine di copertina',
@@ -216,5 +209,4 @@ class Plugin extends PluginBase
              'Inerba\PostExtras\Components\ExcludeCategory' => 'ExcludeCategory'
         ];
     }
-
 }
