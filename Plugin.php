@@ -52,8 +52,10 @@ class Plugin extends PluginBase
     public function boot()
     {
         PostModel::extend(function($model){
-            $model->jsonable(array_merge($model->getJsonable(), ["extend"]));
-            $model->attachOne = array_merge( $model->attachOne, ['cover_image' => 'System\Models\File'] );
+            //$model->jsonable(array_merge($model->getJsonable(), ["extend"]));
+            $model->addJsonable(["postextras"]);
+            //$model->attachOne = array_merge( $model->attachOne, ['cover_image' => 'System\Models\File'] );
+            $model->attachOne['cover_image'] = 'System\Models\File';
             $model->belongsTo['author'] = [ 'RainLab\User\Models\User' ];
 
             // Imposta il post come "pubblicato" di default con la data e ora del momento in cui si apre
@@ -66,7 +68,7 @@ class Plugin extends PluginBase
 
                 $input = input('Post');
                 // Copia l'immagine dell'elemento incorporato per farne una copertina manipolabile
-                if($input['extend']['embed_cover'] == 0 && isset($model->extend['embed']['image'])){
+                if($input['postextras']['embed_cover'] == 0 && isset($model->extend['embed']['image'])){
                     $remote_file = strtok($model->extend['embed']['image'],'?');
                     $temp_file = storage_path('temp/') . uniqid(rand(), true) . '.' . pathinfo($remote_file, PATHINFO_EXTENSION);
                     $file = copy($remote_file, $temp_file);
@@ -83,7 +85,8 @@ class Plugin extends PluginBase
         });
 
         PostCategory::extend(function($model){
-            $model->attachOne = array_merge( $model->attachOne, ['cover_image' => 'System\Models\File'] );
+            //$model->attachOne = array_merge( $model->attachOne, ['cover_image' => 'System\Models\File'] );
+            $model->attachOne['cover_image'] = 'System\Models\File';
         });
 
         UserModel::extend(function($model)
@@ -117,7 +120,7 @@ class Plugin extends PluginBase
             {
 
                 $widget->addFields([
-                    'extend[direct_link]' => [
+                    'postextras[direct_link]' => [
                         'label'   => 'Link diretto, invia direttamente al link inserito',
                         'type'    => 'text',
                         'tab'     => 'rainlab.blog::lang.post.tab_manage',
@@ -131,7 +134,7 @@ class Plugin extends PluginBase
                         'span'    => 'left',
                         'tab'     => 'rainlab.blog::lang.post.tab_manage'
                     ],
-                    'extend[custom_author]' => [
+                    'postextras[custom_author]' => [
                         'label'   => 'Autore personalizzato',
                         'type'    => 'text',
                         'tab'     => 'rainlab.blog::lang.post.tab_manage',
@@ -142,12 +145,12 @@ class Plugin extends PluginBase
                             'condition' => 'value[]'
                         ]
                     ],
-                    'extend[embed]' => [
+                    'postextras[embed]' => [
                         'label'   => 'Media embedder',
                         'type'    => 'embedd',
                         'tab'     => 'rainlab.blog::lang.post.tab_manage'
                     ],
-                    'extend[embed_cover]' => [
+                    'postextras[embed_cover]' => [
                         'label'   => 'Usa un\'immagine di copertina',
                         'type'    => 'switch',
                         'tab'     => 'rainlab.blog::lang.post.tab_manage'
@@ -159,7 +162,7 @@ class Plugin extends PluginBase
                         'tab'     => 'rainlab.blog::lang.post.tab_manage',
                         'trigger' => [
                             'action' => 'show',
-                            'field' => 'extend[embed_cover]',
+                            'field' => 'postextras[embed_cover]',
                             'condition' => 'checked'
                         ]
                     ],

@@ -4,3 +4,6 @@
 1.0.4:
     - 'Add Bio to users'
     - add_bio_to_users.php
+1.0.5:
+    - 'Rename Blog Posts Field Extras'
+    - rename_blog_posts_field_extras.php
